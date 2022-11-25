@@ -18,42 +18,41 @@ type PropsType = {
 
 const ToDoList = (props: PropsType) => {
     const [title, setTitle] = useState<string>('')
-
-    const addTask = () =>{
+    const addNewTask = () =>{
         props.addTask(title)
         setTitle('')
     }
     const sentLocalTitle = (e:ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
     const onEnterAddTask = (e:KeyboardEvent<HTMLInputElement>) => {
         if(e.key=='Enter'){
-            addTask()
+            addNewTask()
         }
     }
+    const taskListItem =  props.task.map((t) => {
+            return <li key={t.id}>
+                <input type={"checkbox"} checked={t.isDone}/>
+                <span>{t.title}</span>
+                <button onClick={() => props.removeTask(t.id)}>X</button>
+            </li>
+        })
+    const onClickHandlerCreator = (filter: SetFilterType) => () => props.setNextFilter(filter)
+
 
 
     return (
         <div>
             <h3>{props.title}</h3>
             <input
+                 value={title}
                 onKeyDown={onEnterAddTask}
-                value={title}
                 onChange={sentLocalTitle}/>
-            <button onClick={() => {
-                addTask()
-            }}>+</button>
+            <button onClick={addNewTask}>+</button>
             <ul>
-                {props.task.map((t) => {
-                    return <li key={t.id}>
-                        <input type={"checkbox"} checked={t.isDone}/>
-                        <span>{t.title}</span>
-                        <button onClick={() => props.removeTask(t.id)}>X</button>
-                    </li>
-                })}
-
+                {taskListItem}
             </ul>
-            <button onClick={() => props.setNextFilter("All")}>All</button>
-            <button onClick={() => props.setNextFilter('Active')}>Active</button>
-            <button onClick={() => props.setNextFilter('Completed')}>Completed</button>
+            <button onClick={onClickHandlerCreator("All")}>All</button>
+            <button onClick={onClickHandlerCreator('Active')}>Active</button>
+            <button onClick={onClickHandlerCreator('Completed')}>Completed</button>
         </div>
     )
 }
