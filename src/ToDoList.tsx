@@ -1,59 +1,60 @@
-import React, {ChangeEvent,KeyboardEvent, useState} from "react";
-import {SetFilterType} from "./App";
+import {KeyboardEvent, ChangeEvent, useState} from "react";
+import React from "react";
+import {FilterType} from "./App";
 
 export type TaskType = {
     id: string
     title: string
-    isDone: boolean
-    main: string
+    doIt: boolean
 }
 
 type PropsType = {
     title: string
     task: Array<TaskType>
-    removeTask: (id: string) => void
-    setNextFilter: (nextFilter: SetFilterType) => void
     addTask: (title: string) => void
+    deleteTask: (id: string) => void
+    filterNewState: (nextFilter:FilterType)=>void
+
 }
 
 const ToDoList = (props: PropsType) => {
-    const [title, setTitle] = useState<string>('')
-    const addNewTask = () =>{
+
+    const [title, setTitle] = useState('')
+    const createTasksList = props.task.map((t) => {
+        return <li key={t.id}>
+            <span> {t.title} </span>
+            <input type={"checkbox"} checked={t.doIt}/>
+            <button onClick={() => props.deleteTask(t.id)}>Delete</button>
+        </li>
+    })
+    const nextInputValue = (e: ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
+    const onEnterAddTask = (e: KeyboardEvent<HTMLInputElement>) => {
+        if (e.key == 'Enter') {
+            props.addTask(title);
+            setTitle('');
+        }
+    }
+    const deleteTaskClick = () => {
         props.addTask(title)
         setTitle('')
     }
-    const sentLocalTitle = (e:ChangeEvent<HTMLInputElement>) => setTitle(e.currentTarget.value)
-    const onEnterAddTask = (e:KeyboardEvent<HTMLInputElement>) => {
-        if(e.key=='Enter'){
-            addNewTask()
-        }
-    }
-    const taskListItem =  props.task.map((t) => {
-            return <li key={t.id}>
-                <input type={"checkbox"} checked={t.isDone}/>
-                <span>{t.title}</span>
-                <button onClick={() => props.removeTask(t.id)}>X</button>
-            </li>
-        })
-    const onClickHandlerCreator = (filter: SetFilterType) => () => props.setNextFilter(filter)
-
-
 
     return (
         <div>
-            <h3>{props.title}</h3>
+            <h1>{props.title}</h1>
             <input
-                 value={title}
+                value={title}
                 onKeyDown={onEnterAddTask}
-                onChange={sentLocalTitle}/>
-            <button onClick={addNewTask}>+</button>
+                onChange={nextInputValue}/>
+            <button onClick={deleteTaskClick}>+</button>
             <ul>
-                {taskListItem}
+                {createTasksList}
             </ul>
-            <button onClick={onClickHandlerCreator("All")}>All</button>
-            <button onClick={onClickHandlerCreator('Active')}>Active</button>
-            <button onClick={onClickHandlerCreator('Completed')}>Completed</button>
+            <button onClick={()=>props.filterNewState('all')} >All</button>
+            <button onClick={()=>props.filterNewState('active')}>Active</button>
+            <button onClick={()=>props.filterNewState('completed')}>Complete</button>
         </div>
     )
 }
+
 export default ToDoList
