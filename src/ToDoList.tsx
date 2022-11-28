@@ -1,34 +1,44 @@
-import {TaskType} from "./App";
-import {useState} from "react";
+import React, {useState} from "react";
+import {ToDoListPropsType} from "./App";
 
 
-type TasksPropsType={
-    tasks:Array<TaskType>
-    addNewTask:(title:string)=>void
-}
+const ToDoList = (props: ToDoListPropsType) => {
 
-const ToDoList = (props: TasksPropsType) =>{
-   const[title,setTitle]=useState('')
+    const [title, setTitle] = useState('')
 
-    return(
+    const taskList = props.tasks.map(t => <li key={t.id}>
+        <span>{t.task}</span><input type={"checkbox"}
+                                    checked={t.check}/>
+        <button onClick={()=>props.removeTask(t.id)}>Delete</button>
+    </li>)
+
+    const addNewTask = (title: string) => {
+        props.addTask(title)
+        setTitle("")
+    }
+
+
+    return (
         <div>
-            <h1>title</h1>
+            <h1>titleee</h1>
             <input
-                onChange={(e)=> setTitle(e.currentTarget.value)}/>
-            <button onClick={()=>props.addNewTask(title)}>ADD</button>
+                value={title}
+                onChange={(e) => setTitle(e.currentTarget.value)}
+                onKeyDown={(e) => {
+                    if (e.key == 'Enter') {
+                        return addNewTask(title)
+                    }
+                }}
+            />
+            <button onClick={() => addNewTask(title)}>ADD</button>
             <ul>
-                {props.tasks.map(t=>{
-                    return(
-                        <li key={t.id}>
-                            <span>{t.title}</span>
-                        </li>
-                    )
-                })}
+                {taskList}
             </ul>
-            <button></button>
-            <button></button>
-            <button></button>
+            <button onClick={()=>props.getFilter('all')}>All</button>
+            <button onClick={()=>props.getFilter('active')}>Active</button>
+            <button onClick={()=>props.getFilter('completed')}>Complete</button>
         </div>
     )
 }
+
 export default ToDoList
