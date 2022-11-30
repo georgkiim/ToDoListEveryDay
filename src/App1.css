@@ -1,12 +1,59 @@
 .App{
     padding: 30px;
     display: flex;
-    background-color: coral;
+    background-color: cadetblue;
 }
 .App > div {
-    margin-right: 50px;
-    background-color: coral;
+
+
 }
 .button-active{
     background-color: paleturquoise;
+}
+
+.isDone {
+    text-decoration: line-through;
+    border-radius: 10px;
+    border: 1px solid;
+    margin-left: 10%;
+    width: 50%;
+}
+.error {
+    border: coral 3px solid;
+}
+
+.error-message {
+    color: gold;
+}
+
+.todolist {
+    margin-right: 50px;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 40%;
+    border: azure 2px solid;
+    border-radius: 15px;
+    background-color: darkslategray;
+}
+.header {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 35%;
+    background-color: burlywood;
+    border-radius: 20px;
+}
+.tit {
+background-color: paleturquoise;
+    border-radius: 10px;
+    border: 1px solid;
+   margin-left: 10%;
+    width: 50%;
+}
+.poop{
+    margin-left: 10%;
+}
+.inputciv{
+    width: 50%;
 }
