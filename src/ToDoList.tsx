@@ -1,69 +1,61 @@
-import React, {KeyboardEvent, ChangeEvent, useState} from "react";
+import React, {ChangeEvent, useState} from "react";
 import {FilterType, TaskType} from "./App";
+import './ToDoList.css'
 
-type PropsType = {
+
+type ToDoListPropsType = {
     tasks: TaskType[]
     addTask: (task: string) => void
+    setChecked: (id: string, isDone: boolean) => void
     removeTask: (id: string) => void
-    changeCheck: (id: string, isDone: boolean) => void
-    setFilteredTasks: (newFilter: FilterType) => void
-    filter: FilterType
+    setNewFilter: (nexFilter: FilterType) => void
 }
-const ToDoList = (props: PropsType) => {
-    const [task, setTask] = useState('')
-    const [error, setError] = useState('')
-    const tasksList = props.tasks.length !== 0
-        ? props.tasks.map(t => {
-            return (
-                <li key={t.id} className={t.isDone === true ? 'isDone' : 'tit'}>
-                    {t.task}
-                    <input
-                        onChange={(e) => props.changeCheck(t.id, e.currentTarget.checked)}
-                        type={"checkbox"} checked={t.isDone}/>
-                    <button onClick={() => props.removeTask(t.id)}>Удалить</button>
-                </li>
 
-            )
-        }) : 'Список задач пуст!:)'
+const ToDoList = (props: ToDoListPropsType) => {
+
+    const [task, setTask] = useState<string>('')
+    const [error, setError] = useState<string>('')
+    const taskList = props.tasks.map(t => {
+        const changeStatus = (e: ChangeEvent<HTMLInputElement>) => props.setChecked(t.id, e.currentTarget.checked)
+        const onClickRemoveTask = () => props.removeTask(t.id)
+        return (<li key={t.id} className='list'>
+                <span>{t.task}</span>
+                <input type={"checkbox"}
+                       checked={t.isDone}
+                       onChange={changeStatus}/>
+                <button onClick={onClickRemoveTask}>X</button>
+            </li>
+        )
+    })
     const addNewTask = () => {
         if (task.trim() !== '') {
             props.addTask(task)
             setTask('')
-            setError('')
-        } else {
-            setError("Введите задачу!")
-        }
+        } else setError('NOOOO')
+
     }
-    const onEnter = (e: KeyboardEvent<HTMLInputElement>) => {
-        if (e.key === 'Enter') {
-            addNewTask()
-        }
-    }
-    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
+    const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
         setTask(e.currentTarget.value)
-        setError("")
+        setError('')
     }
-    const setFilterClass = (filter: FilterType) => props.filter === filter ? 'button-active' : ''
-    const OnClickSetFilter = (newFilter: FilterType) => () => props.setFilteredTasks(newFilter)
+    const onClickSetNewFilter = (n: FilterType) => () => props.setNewFilter(n)
     return (
-        <div className="todolistDone">
-            <h2 className='header'> Список задач</h2>
-            <div className='poop'>
-                <input value={task} onChange={onChange} onKeyDown={onEnter} className={error ? 'error' : 'inputciv'}/>
-                <button className='addButton' onClick={addNewTask}>Добавить задачу</button>
-                {error && <div className='error-message'>{error}</div>}
-            </div>
-            <ul>{tasksList}</ul>
-            <button className={setFilterClass("all")} onClick={OnClickSetFilter('all')}>
-                Все здачи
-            </button>
-            <button className={setFilterClass('active')} onClick={OnClickSetFilter('active')}>
-                Надо делать!
-            </button>
-            <button className={setFilterClass('completed')} onClick={OnClickSetFilter('completed')}>
-                Завершенные
-            </button>
+        <div>
+            <h3 className='text'>ToDo List</h3>
+            <input
+                value={task}
+                onChange={onChangeHandler}
+            />
+            <button onClick={addNewTask}>ADD TASK</button>
+            <div>{error}</div>
+            <ul>
+                {taskList}
+            </ul>
+            <button onClick={onClickSetNewFilter('all')}>All</button>
+            <button onClick={onClickSetNewFilter('active')}>ACTIVE</button>
+            <button onClick={onClickSetNewFilter('completed')}>Completed</button>
         </div>
     )
 }
+
 export default ToDoList

@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import ToDoList from "./ToDoList";
-import './App1.css'
 import {v1} from "uuid";
+import './App1.css'
 
 export type TaskType = {
     id: string
@@ -10,44 +10,43 @@ export type TaskType = {
 }
 export type FilterType = 'all' | 'active' | 'completed'
 
+
 const App = () => {
-    const [tasks, setTasks] = useState<Array<TaskType>>([])
+    const [tasks, setTasks] = useState<TaskType[]>([])
     const [filter, setFilter] = useState<FilterType>('all')
+
     const addTask = (task: string) => {
         setTasks([{id: v1(), task, isDone: false}, ...tasks])
     }
+
+    const setChecked = (id: string, isDone: boolean) => {
+        setTasks(tasks.map(t => t.id == id ? {...t, isDone} : t))
+    }
+
     const removeTask = (id: string) => {
         setTasks(tasks.filter(t => t.id !== id))
     }
-    const changeCheck = (id: string, isDone: boolean) => {
-        setTasks(tasks.map(t => id == t.id ? {...t, isDone} : t))
+
+    const setNewFilter = (nextFilter:FilterType) => {
+    setFilter(nextFilter)
     }
-    const setFilteredTasks = (newFilter: FilterType) => {
-        setFilter(newFilter)
-    }
-    const filteredTasks = (tasks: TaskType[], filter: FilterType) => {
-        debugger
-        switch (filter) {
-            case "active":
-                return tasks.filter(t => !t.isDone)
-            case "completed":
-                return tasks.filter(t => t.isDone)
-            case "all":
-                return tasks
-        }
+
+
+    const getFilteredTasks = (filter:FilterType, tasks:TaskType[]) =>{
+        switch (filter){
+            case "active":return tasks.filter(t=> !t.isDone)
+            case "completed":return tasks.filter(t=> t.isDone)
+            case 'all': return tasks}
     }
 
     return (
-        <div className='App'>
-         <div className='todolist'> <ToDoList
-                      tasks={filteredTasks(tasks, filter)}
+        <div className='app'>
+            <ToDoList tasks={getFilteredTasks(filter, tasks)}
                       addTask={addTask}
+                      setChecked={setChecked}
                       removeTask={removeTask}
-                      changeCheck={changeCheck}
-                      setFilteredTasks={setFilteredTasks}
-                      filter={filter}
+                      setNewFilter={setNewFilter}
             />
-             </div>
         </div>
     )
 }
