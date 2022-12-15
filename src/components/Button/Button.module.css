@@ -1,0 +1,14 @@
+.button{
+    margin: 2px;
+    background-color: #282c34;
+    color: #ff8d58;
+    border-radius: 2px;
+    border: #ff8d58 2px solid;
+}
+.button:active{
+    margin: 2px;
+    background-color: #282c34;
+    color: #ff8d58;
+    border-radius: 2px;
+    border: #ff8d58 0px solid;
+}
