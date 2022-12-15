@@ -1,26 +1,13 @@
-
-.App {
-  padding: 30px;
-  display: flex;
+.app {
+    display: flex;
 }
-
-.App > div {
-  margin-right: 50px;
+.addInput{
+    margin:15px;
+    padding: 10px;
+    height: 180%;
+    width: 25%;
+    border: 2px solid #61dafb;
+    border-radius: 10px;
+    color:#61dafb ;
+    display: inline-block;
 }
-
-.error {
-  border: red 1px solid;
-}
-
-.error-message {
-  color: red;
-}
-
-.active-filter {
-  background-color: aquamarine;
-}
-
-.is-done {
-  opacity: 0.5;
-}
-
