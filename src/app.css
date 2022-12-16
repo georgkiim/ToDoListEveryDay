@@ -6,8 +6,19 @@
     padding: 10px;
     height: 180%;
     width: 25%;
-    border: 2px solid #61dafb;
+    border: 2px solid black;
     border-radius: 10px;
-    color:#61dafb ;
-    display: inline-block;
+    color:black ;
+    background-color: burlywood;
+}
+.addToDo{
+    border: 2px solid ;
+    margin: 20px;
+    text-align: center;
+    font-size: 25px;
+    background-color: darkseagreen;
+    font-family: cursive;
+}
+.title{
+    display: flex;
 }

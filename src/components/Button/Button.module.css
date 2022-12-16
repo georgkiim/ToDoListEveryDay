@@ -1,9 +1,68 @@
 .button{
     margin: 2px;
-    background-color: #282c34;
-    color: #ff8d58;
-    border-radius: 2px;
-    border: #ff8d58 2px solid;
+    background-color: brown;
+    color: black;
+    border-radius: 10px;
+    border: black 2px solid;
+}
+.removeTodoButton{
+    margin: 2px;
+    background-color: #ff6438;
+    color: black;
+    border-radius: 10px;
+    border: black 2px solid;
+}
+.removeTodoButton:active{
+    margin: 2px;
+    background-color: burlywood;
+    color: black;
+    border-radius: 10px;
+    border: black 2px solid;
+}
+.removeTasksButton{
+    margin: 2px;
+    background-color: #ff8000;
+    color: black;
+    border-radius: 10px;
+    border: black 2px solid;
+    font-size: 8px;
+}
+.removeTasksButton:active{
+    margin: 2px;
+    background-color:burlywood;
+    border: black 2px solid;
+    color: black;
+    font-size: 8px;
+}
+.addButton{
+    margin-left: 10px;
+    background-color: darkseagreen;
+    color: black;
+    border-radius: 10px;
+    border: black 2px solid;
+    font-size: 15px;
+
+}
+.addButton:active{
+    margin: 2px;
+    background-color: #ff8d58;
+    color: black;
+    border-radius: 10px;
+    border: black 2px solid;
+}
+.filterButton{
+    margin: 2px;
+    background-color: burlywood;
+    color: black;
+    border-radius: 10px;
+    border: black 2px solid;
+}
+.filterButton:active{
+    margin: 2px;
+    background-color: burlywood;
+    color: burlywood;
+    border-radius: 10px;
+    border: black 2px solid;
 }
 .button:active{
     margin: 2px;
@@ -11,4 +70,11 @@
     color: #ff8d58;
     border-radius: 2px;
     border: #ff8d58 0px solid;
+}
+.onButton{
+    margin: 2px;
+    background-color: darkseagreen;
+    color: black;
+    border-radius: 10px;
+    border: black 2px solid;
 }
